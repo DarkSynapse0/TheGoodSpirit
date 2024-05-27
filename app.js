@@ -1,36 +1,49 @@
-// Add your JavaScript here
-let generatedPasssword = document.getElementById("generatedPasssword")
-generatedPasssword.value = ""
+const playerList = document.getElementById('players');
+const addPlayerButton = document.getElementById('add-player');
+const rollDiceButton = document.getElementById('roll-dice');
+const gameResult = document.getElementById('game-result');
 
-let uppercaseLettersArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-let lowercaseLettersArray = "abcdefghijklmnopqrstuvwxyz"
-let symbolsArray = "!@#$%^&*()_+{}\":>?</|`~"
-let numbersArray = "1234567890"
+let players = [];
+let currentPlayer = 0;
 
+addPlayerButton.addEventListener('click', () => {
+  const playerName = prompt('Enter player name:');
+  if (playerName) {
+    players.push({ name: playerName, score: 0 });
+    updatePlayerList();
+  }
+});
 
-let uppercaseBox = document.getElementById("uppercase")
-let lowercaseBox = document.getElementById("lowercase")
-let numbersBox = document.getElementById("numbers")
-let symbolsBox = document.getElementById("symbols")
+function updatePlayerList() {
+  playerList.innerHTML = '';
+  players.forEach((player, index) => {
+    const playerElement = document.createElement('div');
+    playerElement.classList.add('flex', 'justify-between', 'items-center', 'mb-2');
+    playerElement.innerHTML = `
+      <span class="font-bold">${player.name}</span>
+      <span>Score: ${player.score}</span>
+    `;
+    playerList.appendChild(playerElement);
+  });
+  if (players.length > 1) {
+    rollDiceButton.disabled = false;
+  }
+}
 
-let generatePasswordBtn = document.getElementById("generate")
+rollDiceButton.addEventListener('click', () => {
+  const diceRoll = Math.floor(Math.random() * 6) + 1;
+  players[currentPlayer].score += diceRoll;
+  gameResult.textContent = `${players[currentPlayer].name} rolled a ${diceRoll}`;
+  checkWinner();
+  currentPlayer = (currentPlayer + 1) % players.length;
+  updatePlayerList();
+});
 
-generatePasswordBtn.onclick = () => {
-    generatedPasssword.value = ""
-    let length = document.getElementById("length")
-    for(let i = 0; i <= length.value; i++) {
-        if (uppercaseBox.checked) {
-            let randomIndex = Math.floor(Math.random() * uppercaseLettersArray.length);
-            generatedPasssword.value += uppercaseLettersArray[randomIndex];
-        } if (lowercaseBox.checked) {
-            let randomIndex = Math.floor(Math.random() * lowercaseLettersArray.length);
-            generatedPasssword.value += lowercaseLettersArray[randomIndex];
-        } if (numbersBox.checked) {
-            let randomIndex = Math.floor(Math.random() * numbersArray.length);
-            generatedPasssword.value += numbersArray[randomIndex];
-        } if (symbolsBox.checked) {
-            let randomIndex = Math.floor(Math.random() * symbolsArray.length);
-            generatedPasssword.value += symbolsArray[randomIndex];
-        }
-    }
+function checkWinner() {
+  const winningScore = 10; // You can adjust the winning score here
+  const winner = players.find(player => player.score >= winningScore);
+  if (winner) {
+    gameResult.textContent = `${winner.name} wins!`;
+    rollDiceButton.disabled = true;
+  }
 }
