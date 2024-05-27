@@ -1,74 +1,19 @@
-
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dice Game</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-
-<body class="bg-purple-100 flex justify-center items-center min-h-screen">
-    <div class="bg-white text-[#403f41] p-8 space-y-6 shadow-lg rounded-xl max-w-md md:max-w-lg">
-
-        <h1>Password Generator</h1>
-        <hr>
-        <p>
-            <input
-              placeholder="Generated Password"
-              class="bg-[#292929] border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#000] cursor-pointer transition"
-              type="text"
-              id="generatedPasssword"
-            />
-        </p>
-        <div class="options">
-            <hr>
-            <p>
-                <input type="number"
-                placeholder="Enter the length"
-                class=" my-2 block w-56 rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
-                id="length"
-                name="length"
-                 >
-            </p>
-            <p class="my-2">
-                <input 
-                    class="mr-2" 
-                    type="checkbox" name="uppercase" id="uppercase"
-                >
-                <label for="uppercase">Uppercse Letters</label>
-            </p>
-            <p class="my-2">
-                <input 
-                    class="mr-2" 
-                    type="checkbox" name="lowercase" id="lowercase"
-                >
-                <label for="lowercase">Lowercase Letters</label>
-            </p>
-            <p class="my-2">
-                <input 
-                    class="mr-2" 
-                    type="checkbox" name="symbols" id="symbols"
-                >
-                <label for="symbols">Symbols</label>
-            </p>
-            <p class="my-2">
-                <input 
-                    class="mr-2" 
-                    type="checkbox" name="numbers" id="numbers"
-                >
-                <label for="numbers">Numbers</label>
-            </p>
-            <hr>
-            <button 
-                id="generate"
-                class=" my-4 bg-[#292929] border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
-            >
-            Generate
-            </button>
-        </div>
-        
+<body>
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4">Dice Game</h1>
+        <div id="players"></div>
+        <button id="add-player" class="bg-blue-500 text-white py-2 px-4 rounded-md mb-4">Add Player</button>
+        <button id="roll-dice" class="bg-green-500 text-white py-2 px-4 rounded-md disabled">Roll Dice</button>
+        <div id="game-result" class="text-center"></div>
     </div>
+    <script src="script.js"></script>
 </body>
-<script src="main.js"></script>
 </html>
